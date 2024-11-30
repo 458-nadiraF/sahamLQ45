@@ -32,10 +32,9 @@ class handler(BaseHTTPRequestHandler):
             #received_json = json.loads(post_data.decode('utf-8'))
             price=received_json.get('price')
             symbol=received_json.get('Symbol')
-            telegram_secret=os.getenv('TELEGRAM_API')
+            forward_url=os.getenv('TELEGRAM_API')
 
             # Define the API endpoint where you want to forward the request
-            forward_url = f"https://api.telegram.org/{telegram_secret}/sendMessage"  # Replace with your actual API endpoint
             textContent=f"Alert: screener LQ45 M15 A: Any alert() function call \n BUY {symbol} {price} {time.time()}"
             params={
                "chat_id": f"{os.getenv('CHAT_ID')}",
