@@ -36,26 +36,15 @@ class handler(BaseHTTPRequestHandler):
 
             # Define the API endpoint where you want to forward the request
             forward_url = f"https://api.telegram.org/{telegram_secret}/sendMessage"  # Replace with your actual API endpoint
-            buy_json={
-               "symbol": symbol,
-               "actionType": "ORDER_TYPE_BUY",
-               "volume": round(lot*balance2, 2),
-               "stopLoss": sl,
-               "takeProfit": float(tp),
-               "takeProfitUnits": "ABSOLUTE_PRICE"
-            }
-            
-            headers = {
-                'Accept': 'application/json',
-                'auth-token':token,
-                'Content-Type':'application/json'
-                # Add any other required headers here
+            textContent=f"Alert: screener LQ45 M15 A: Any alert() function call \n BUY {symbol} {price} {time.time()}"
+            params={
+               "chat_id": f"{os.getenv('CHAT_ID')}",
+               "text": textContent
             }
             
             response = requests.post(
                 forward_url,
-                json=buy_json,
-                headers=headers
+                params=params
             )
             
             execution_duration = (time.time() - start_time) * 1000
