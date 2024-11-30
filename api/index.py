@@ -11,12 +11,12 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        self.wfile.write('Hello, world!'.encode('utf-8'))
+        self.wfile.write('LQ45 Stock webhook handler'.encode('utf-8'))
         return
     def get_account_balance(self):
         headers = {
             'Accept': 'application/json',
-            'auth-token': os.getenv('METAAPI_TOKEN')  
+            'auth-token': os.getenv('TELEGRAM_TOKEN')  
         }
         
         try:
@@ -51,15 +51,12 @@ class handler(BaseHTTPRequestHandler):
             # Parse JSON
             received_json = json.loads(post_data)
             #received_json = json.loads(post_data.decode('utf-8'))
-            lot=received_json.get('lot')
-            sl=received_json.get('sl')
-            tp=received_json.get('tp')
+            price=received_json.get('price')
             symbol=received_json.get('Symbol')
-            
-            balance=self.get_account_balance()
+            telegram_secret=os.getenv('TELEGRAM_API')
+
             # Define the API endpoint where you want to forward the request
-            forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/6d01a31f-1091-448d-a8eb-549f2e743e67/trade"  # Replace with your actual API endpoint
-            balance2= float(balance) 
+            forward_url = f"https://api.telegram.org/{telegram_secret}/sendMessage"  # Replace with your actual API endpoint
             buy_json={
                "symbol": symbol,
                "actionType": "ORDER_TYPE_BUY",
@@ -71,7 +68,7 @@ class handler(BaseHTTPRequestHandler):
             
             headers = {
                 'Accept': 'application/json',
-                'auth-token':os.getenv('METAAPI_TOKEN'),
+                'auth-token':token,
                 'Content-Type':'application/json'
                 # Add any other required headers here
             }
