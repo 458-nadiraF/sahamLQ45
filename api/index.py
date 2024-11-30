@@ -13,27 +13,6 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write('LQ45 Stock webhook handler'.encode('utf-8'))
         return
-    def get_account_balance(self):
-        headers = {
-            'Accept': 'application/json',
-            'auth-token': os.getenv('TELEGRAM_TOKEN')  
-        }
-        
-        try:
-            get_balance_url=f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/6d01a31f-1091-448d-a8eb-549f2e743e67/account-information"
-            response = requests.get(get_balance_url, headers=headers)
-            
-            # Check if request was successful
-            if response.status_code == 200:
-                data = response.json()
-                return data.get('balance')  
-            else:
-                print(f"Error: API request failed with status code {response.status_code}")
-                return None
-                
-        except Exception as e:
-            print(f"Error fetching balance: {str(e)}")
-            return None
     def do_POST(self):
         # terima alert dr tv
       
