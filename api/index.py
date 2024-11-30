@@ -47,7 +47,7 @@ class handler(BaseHTTPRequestHandler):
             )
             
             execution_duration = (time.time() - start_time) * 1000
-            timestamp=timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
             # Send response back to the original client
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
