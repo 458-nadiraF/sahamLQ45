@@ -32,11 +32,16 @@ class handler(BaseHTTPRequestHandler):
             #received_json = json.loads(post_data.decode('utf-8'))
             price=received_json.get('price')
             symbol=received_json.get('Symbol')
-            add=received_json.get('add')
+            try:
+                add=received_json.get('add1')
+                add2=received_json.get('add2')
+            except:
+                add=""
+                add2=""
             forward_url=os.getenv('TELEGRAM_API')
             timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
             # Define the API endpoint where you want to forward the request
-            textContent=f"Alert: screener LQ45 M15 A: Any alert() function call \nBUY {symbol} {price} {add}\n{timestamp}"
+            textContent=f"Alert: screener LQ45 M15 A: Any alert() function call \nBUY {symbol} {price} {add} {add2}\n{timestamp}"
             params={
                "chat_id": f"{os.getenv('CHAT_ID')}",
                "text": textContent
