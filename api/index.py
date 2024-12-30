@@ -33,7 +33,7 @@ class handler(BaseHTTPRequestHandler):
             price=received_json.get('price')
             symbol=received_json.get('Symbol')
             try:
-                add=received_json.get('add1')
+                add=received_json.get('add')
                 add2=received_json.get('add2')
             except:
                 add=""
